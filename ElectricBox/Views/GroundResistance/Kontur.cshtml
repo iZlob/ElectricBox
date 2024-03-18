@@ -1,0 +1,43 @@
+﻿@model ElectricBox.Models.GroundResistance
+@using ElectricBox.Models
+
+@section Head{
+    <link rel="stylesheet" href="~/css/kontur.css" />
+}
+
+@section Scripts{    
+    <script>
+        const groundResistance = [];
+        const climaticZoneFactors = {
+            zona: new String("@Model.climaticZoneFactors[0].ClimaticZone"),
+            ClimaticFactorHor: new String("@Model.climaticZoneFactors[0].ClimaticFactorHor")
+        };
+        const factorsUseVerticalElectrodesLine = [];
+        const factorsUseVerticalElectrodesCircle = [];
+        const factorsUseHorizontalElectrodesLine = [];
+        const factorsUseHorizontalElectrodesCircle = [];
+
+        //console.log(@Model.climaticZoneFactors.ElementAt(0).ClimaticZone);
+        //climaticZoneFactors.push(@Model.climaticZoneFactors.ElementAt(0).ClimaticZone);
+        
+
+    </script>
+
+    <script src="~/js/Kontur.js"></script>
+}
+
+@{
+    ViewData["Title"] = "Расчет контура заземления";    
+}
+
+
+<div id="kontur">
+    <div id="partLeft">
+        @await Html.PartialAsync("/Views/GroundResistance/Selections.cshtml", new GroundResistance())
+    </div>
+    <div id="partRight">
+        <input type="text" id="rez" />
+    </div>
+</div>
+
+

@@ -1,0 +1,93 @@
+﻿@model ElectricBox.Models.GroundResistance
+
+@{
+    <h2>Выбор параметров контура заземления</h2>
+    <div class="selection">
+        <label>1. Параметры вертикальных электродов: </label>
+        <div>
+            <label>   - профиль: </label>
+            <select id="typeVerEl">
+                <option disabled selected>Выберите профиль электродов</option>
+                <option>Круг</option>
+                <option>Уголок</option>
+                <option>Квадрат</option>
+                <option>Труба</option>
+            </select>
+        </div>
+        <div>
+            <label>   - поперечное сечение (мм<sup>2</sup>): </label>
+            <input id="vertElSechenie" />
+        </div>
+        <div>
+            <label>   - количество электродов (шт): </label>
+            <input id="vertElCount" />
+        </div>
+        <div>
+            <label>   - длина 1го электрода (м): </label>
+            <input id="vertElLenght" />
+        </div>
+        <div>
+            <label>   - расстояние м/у электродами (м): </label>
+            <input id="vertElLenghtBeetwean"/>
+        </div>
+    </div>
+
+    <div class="selection">
+        <label>2. Параметры горизонтального электрода: </label>
+        <div>
+            <label>   - профиль: </label>
+            <select id="typeHorEl">
+                <option disabled selected>Выберите профиль сечения</option>
+                <option>Полоса</option>
+                <option>Круг</option>
+            </select>
+        </div>
+        <div>
+            <label>   - поперечное сечение (мм<sup>2</sup>): </label>
+            <input id="horElSechenie" />
+        </div>
+        <div>
+            <label>   - Общая длина электрода (м): </label>
+            <input id="horElLenght" />
+        </div>
+        <div>
+            <label>   - глубина заложения (см): </label>
+            <input id="horElH" />
+        </div>
+    </div>
+
+    <div class="selection">
+        <label>3. Выбор типа грунта: </label>
+        <select id="ground">
+            <option disabled selected>Выберите тип грунта</option>
+            @for (int i = 0; i < Model.groundResistance.Count; i++)
+            {
+                <option>@Model.groundResistance.Keys.ElementAt(i)</option>
+            }
+        </select>
+    </div>
+
+    <div class="selection">
+        <label>4. Выбор климатической зоны: </label>
+        <select id="zona">
+            <option disabled selected>Выберите климатическую зону</option>
+            @for (int i = 0; i < Model.climaticZoneFactors.Count; i++)
+            {
+                <option>@Model.climaticZoneFactors[i].ClimaticZone</option>
+            }
+        </select>
+    </div>
+
+    <div class="selection">
+        <label>5. Схема контура заземления: </label>
+        <div>
+            <input id="schemaLine" type="radio" name="schema" checked/>
+            <img src="~/SchemaLine.png" />
+            <input id="schemaCircle" type="radio" name="schema"/>
+            <img src="~/SchemaCircle.png"/>
+        </div>
+    </div>
+    <div>
+        <button id="btnCalc" onclick="calc()">Посчитать</button>
+    </div>
+}
