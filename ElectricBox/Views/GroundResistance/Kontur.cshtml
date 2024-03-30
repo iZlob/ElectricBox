@@ -1,5 +1,9 @@
-﻿@model ElectricBox.Models.GroundResistance
-@using ElectricBox.Models
+﻿@model GroundResistance
+@using ElectricBox.Models.Kontur
+
+@{
+    ViewData["Title"] = "Расчет контура заземления";
+}
 
 @section Head{
     <link rel="stylesheet" href="~/css/kontur.css" />
@@ -7,36 +11,73 @@
 
 @section Scripts{    
     <script>
-        const groundResistance = [];
-        const climaticZoneFactors = {
-            zona: new String("@Model.climaticZoneFactors[0].ClimaticZone"),
-            ClimaticFactorHor: new String("@Model.climaticZoneFactors[0].ClimaticFactorHor")
+        const groundResistance = [];//коллекции для передачи в метод calc для расчетов
+        const climaticZoneFactors = [];
+        const factorsUseVerticalElectrodes = [];
+        const factorsUseHorizontalElectrodes = [];
+
+        let objTmp;//временный объект для пушинга
+
+        //собираем коллекцию инфы о грунтах из GroundResistance
+        @foreach (var grnd in @Model.groundResistance)
+            {
+            @Html.Raw(@"objTmp = {
+                ground: new String(""" + grnd.Key + @"""),
+                resistance: new String(""" + grnd.Value + @""")
+                }
+
+                groundResistance.push(objTmp);
+            ");
         };
-        const factorsUseVerticalElectrodesLine = [];
-        const factorsUseVerticalElectrodesCircle = [];
-        const factorsUseHorizontalElectrodesLine = [];
-        const factorsUseHorizontalElectrodesCircle = [];
 
-        //console.log(@Model.climaticZoneFactors.ElementAt(0).ClimaticZone);
-        //climaticZoneFactors.push(@Model.climaticZoneFactors.ElementAt(0).ClimaticZone);
-        
+        //собираем коллекцию инфы о климатич зонах из GroundResistance
+        @foreach (var zona in @Model.climaticZoneFactors){
+            @Html.Raw(@"objTmp = {
+                zona: new String(""" + zona.climaticZone + @"""),
+                climaticFactorVert: new String(""" + zona.climaticFactorVert + @"""),
+                climaticFactorHor: new String(""" + zona.climaticFactorHor + @""")
+                }
 
+                climaticZoneFactors.push(objTmp);
+            ");
+        };
+
+        //собираем коллекцию инфы о коэф использования верт электродов из GroundResistance
+        @foreach (var electrod in @Model.factorsUseVerticalElectrodes)
+        {
+            @Html.Raw(@"objTmp = {
+                ratio: new String(""" + electrod.ratio + @"""),
+                countEl: new String(""" + electrod.countEl + @"""),
+                factorUse: new String(""" + electrod.factorUse + @""")
+                }
+
+                factorsUseVerticalElectrodes.push(objTmp);
+            ");
+        };       
+
+        //собираем коллекцию инфы о коэф использования гор электродов из GroundResistance
+        @foreach (var electrod in @Model.factorsUseHorizontalElectrodes)
+        {
+            @Html.Raw(@"objTmp = {
+                ratio: new String(""" + electrod.ratio + @"""),
+                countEl: new String(""" + electrod.countEl + @"""),
+                factorUse: new String(""" + electrod.factorUse + @""")
+                }
+
+                factorsUseHorizontalElectrodes.push(objTmp);
+            ");
+        };        
     </script>
 
     <script src="~/js/Kontur.js"></script>
 }
-
-@{
-    ViewData["Title"] = "Расчет контура заземления";    
-}
-
 
 <div id="kontur">
     <div id="partLeft">
         @await Html.PartialAsync("/Views/GroundResistance/Selections.cshtml", new GroundResistance())
     </div>
     <div id="partRight">
-        <input type="text" id="rez" />
+        
     </div>
 </div>
 

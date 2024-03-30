@@ -31,26 +31,6 @@ namespace ElectricBox.Controllers
             return View();
         }
 
-        //public IActionResult Kontur()
-        //{
-        //    return View();
-        //}
-
-        public IActionResult Cable()
-        {
-            return View();
-        }
-
-        public IActionResult Apparat()
-        {
-            return View();
-        }
-
-        public IActionResult Transformator()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

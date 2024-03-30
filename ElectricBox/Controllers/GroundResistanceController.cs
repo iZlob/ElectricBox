@@ -1,4 +1,4 @@
-﻿using ElectricBox.Models;
+﻿using ElectricBox.Models.Kontur;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.PortableExecutable;

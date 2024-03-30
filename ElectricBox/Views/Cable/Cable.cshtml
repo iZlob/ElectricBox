@@ -1,0 +1,89 @@
+﻿@model Cable
+@using ElectricBox.Models.Cable
+
+@{
+    ViewData["Title"] = "Выбор проводников";
+}
+
+@section Head{
+    <link rel="stylesheet" href="~/css/cable.css" />
+}
+
+@section Scripts{
+    <script>
+        const unitResistance = [];
+        const cuprumCurrents = [];
+        const aluminiumCurrents = [];
+        const methods = [];
+        const cuts = [];
+        let objTmp;
+            
+        @foreach (var cable in @Model.unitCableResistance)
+            {
+                @Html.Raw(@"objTmp = {
+                    material: new String(""" + cable.Key + @"""),
+                    unitResistance: new String(""" + cable.Value + @""")
+                    }
+
+                    unitResistance.push(objTmp);
+                ");
+            };
+
+        @foreach (var cut in @Model.cuprum)
+            {
+                @Html.Raw(@"objTmp = {
+                    method: new String(""" + cut.method + @"""),
+                    cut: new String(""" + cut.cut + @"""),
+                    current: new String(""" + cut.current + @""")
+                    }
+
+                    cuprumCurrents.push(objTmp);
+                ");
+            };
+
+        @foreach (var cut in @Model.aluminium)
+        {
+            @Html.Raw(@"objTmp = {
+                method: new String(""" + cut.method + @"""),
+                cut: new String(""" + cut.cut + @"""),
+                current: new String(""" + cut.current + @""")
+                }
+
+                aluminiumCurrents.push(objTmp);
+            ");
+        };
+
+        @foreach (var method in @Model.methods)
+        {
+            @Html.Raw(@"objTmp = {
+                        method: new String(""" + method + @""")
+                        }
+
+                methods.push(objTmp);
+            ");
+        };
+
+        @foreach (var cut in @Model.cuts)
+        {
+            @Html.Raw(@"objTmp = {
+                        cut: new String(""" + cut + @""")
+                        }
+
+                cuts.push(objTmp);
+            ");
+        };
+    </script>
+
+    <script src="~/js/Cable.js"></script>
+}
+
+<div id="cable">
+    <div id="partLeft">
+        @await Html.PartialAsync("/Views/Cable/Selections.cshtml", new Cable())
+    </div>
+    <div id="partRight">
+        <div id="answear">
+       
+        </div>
+    </div>
+</div>

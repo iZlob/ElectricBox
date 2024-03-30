@@ -1,0 +1,125 @@
+#cable {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    min-width: 100%;
+}
+
+#partLeft, #partRight {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 80vh;
+    width: 40vw;
+    background-color: white;
+    border: 1px solid black;
+    margin:10px;
+    padding: 10px;
+}
+
+#selection > div, #type > input {
+    margin-bottom: 10px;
+}
+
+#selection {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#table {
+    border: 1px solid black;
+    font-size: 10px;
+    text-align: center;
+}
+
+td, th {
+    border: 1px solid black;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+input[type="number"] {
+    height: 25px;
+    border-bottom-width: thin;
+    width: 70px;
+    text-align: right;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"]:hover {
+    background-color: lightsteelblue;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.radio_btn {
+    display: inline-block;
+    margin-left: 10px
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.radio_btn label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 15px;
+    line-height: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+    user-select: none;
+}
+
+input[type="radio"]:checked + label {
+    background: lightgreen;
+}
+
+.radio_btn label:hover {
+    background-color: lightsteelblue;
+    border: 1px solid black;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+select:hover {
+    background-color: lightsteelblue;
+}
+
+#btnCalc {
+    border: 1px solid black;
+    border-radius: 7px;
+    width: 150px;
+    height: 50px;
+    background-color: white;
+    align-self: end;
+    margin-top: 30px;
+    margin-right: 50px;
+    color: black;
+    box-shadow: 0 0 30px 30px lightsteelblue inset;
+    transition: all 350ms ease-in-out;
+}
+
+#btnCalc:hover {
+    box-shadow: 0 0 7px 2px lightsteelblue inset, 0 0 20px 5px lightsteelblue;
+}

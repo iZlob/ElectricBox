@@ -87,9 +87,10 @@ main {
     color: black;
 }
 
-.plate-link:hover{
+.plate-link:hover {
+    border: 3px solid black;
+    text-decoration: none;
     color: black;
-    opacity: .5;
 }
 
 .plate-link:nth-child(1) {
@@ -101,20 +102,6 @@ main {
 
 .plate-link:nth-child(2) {
     background-image: url(/cable.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.plate-link:nth-child(3) {
-    background-image: url(/apparat.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.plate-link:nth-child(4) {
-    background-image: url(/transformator.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

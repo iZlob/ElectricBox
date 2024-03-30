@@ -1,0 +1,15 @@
+
+.contacts-abaut {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 80vh;
+    width: 40vw;
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+}

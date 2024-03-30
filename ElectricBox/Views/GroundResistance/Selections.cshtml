@@ -1,12 +1,14 @@
-﻿@model ElectricBox.Models.GroundResistance
+﻿@model GroundResistance
+@using ElectricBox.Models.Kontur
 
 @{
-    <h2>Выбор параметров контура заземления</h2>
+    <h3>Выбор параметров контура заземления</h3>
     <div class="selection">
         <label>1. Параметры вертикальных электродов: </label>
+
         <div>
             <label>   - профиль: </label>
-            <select id="typeVerEl">
+            <select id="typeVerEl" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
                 <option disabled selected>Выберите профиль электродов</option>
                 <option>Круг</option>
                 <option>Уголок</option>
@@ -14,51 +16,59 @@
                 <option>Труба</option>
             </select>
         </div>
+
         <div>
             <label>   - поперечное сечение (мм<sup>2</sup>): </label>
-            <input id="vertElSechenie" />
+            <input id="vertElSechenie" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
+
         <div>
             <label>   - количество электродов (шт): </label>
-            <input id="vertElCount" />
+            <input id="vertElCount" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
+
         <div>
             <label>   - длина 1го электрода (м): </label>
-            <input id="vertElLenght" />
+            <input id="vertElLenght" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
+
         <div>
             <label>   - расстояние м/у электродами (м): </label>
-            <input id="vertElLenghtBeetwean"/>
+            <input id="vertElLenghtBeetwean" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
     </div>
 
     <div class="selection">
         <label>2. Параметры горизонтального электрода: </label>
+
         <div>
             <label>   - профиль: </label>
-            <select id="typeHorEl">
+            <select id="typeHorEl" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
                 <option disabled selected>Выберите профиль сечения</option>
                 <option>Полоса</option>
                 <option>Круг</option>
             </select>
         </div>
+
         <div>
             <label>   - поперечное сечение (мм<sup>2</sup>): </label>
-            <input id="horElSechenie" />
+            <input id="horElSechenie" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
+
         <div>
-            <label>   - Общая длина электрода (м): </label>
-            <input id="horElLenght" />
+            <label>   - общая длина электрода (м): </label>
+            <input id="horElLenght" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
+
         <div>
-            <label>   - глубина заложения (см): </label>
-            <input id="horElH" />
+            <label>   - глубина заложения (м): </label>
+            <input id="horElH" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
         </div>
     </div>
 
     <div class="selection">
         <label>3. Выбор типа грунта: </label>
-        <select id="ground">
+        <select id="ground" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
             <option disabled selected>Выберите тип грунта</option>
             @for (int i = 0; i < Model.groundResistance.Count; i++)
             {
@@ -69,11 +79,11 @@
 
     <div class="selection">
         <label>4. Выбор климатической зоны: </label>
-        <select id="zona">
+        <select id="zona" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
             <option disabled selected>Выберите климатическую зону</option>
             @for (int i = 0; i < Model.climaticZoneFactors.Count; i++)
             {
-                <option>@Model.climaticZoneFactors[i].ClimaticZone</option>
+                <option>@Model.climaticZoneFactors[i].climaticZone</option>
             }
         </select>
     </div>
@@ -81,13 +91,13 @@
     <div class="selection">
         <label>5. Схема контура заземления: </label>
         <div>
-            <input id="schemaLine" type="radio" name="schema" checked/>
+            <input id="schemaLine" type="radio" name="schema" checked value="line"/>
             <img src="~/SchemaLine.png" />
-            <input id="schemaCircle" type="radio" name="schema"/>
-            <img src="~/SchemaCircle.png"/>
+            <input id="schemaCircle" type="radio" name="schema" value="circle"/>
+            <img src="~/SchemaCircle.png"  />
         </div>
     </div>
-    <div>
-        <button id="btnCalc" onclick="calc()">Посчитать</button>
-    </div>
+
+    <button id="btnCalc" onclick="calc()">Посчитать</button>
+
 }

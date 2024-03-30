@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\R0.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Node.js" Version="5.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />

@@ -1,0 +1,83 @@
+﻿@model Cable
+@using ElectricBox.Models.Cable
+
+@{
+    <h2>Выбор проводника по току/мощности</h2>
+    <div id="selection">
+        <div>
+            <label>1. Материал проводника: </label>
+            <select id="material" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
+                <option disabled selected>Выберите материал проводника</option>
+                @for (int i = 0; i < Model.unitCableResistance.Count; i++)
+                {
+                    <option>@Model.unitCableResistance.Keys.ElementAt(i)</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>2. Длина линии (м): </label>
+            <input id="cableLenght" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
+        </div>
+
+        <div>
+            <label>3. Способ прокладки: </label>
+            <select id="typePad" onchange="choiseOption(this)" onfocus="optionGetFocus(this)">
+                <option disabled selected>Выберите способ прокладки</option>
+                @for (int i = 0; i < Model.methods.Count; i++)
+                {
+                    <option>@Model.methods[i]</option>
+                }
+            </select>
+        </div>
+
+        <label>3. Род тока:</label>
+        <div class="radio_btn">            
+            <input id="AC" type="radio" name="typeCurrent" checked value="AC" onchange="changeTypeCurrent(this)" />
+            <label for="AC">Переменный</label>
+            <input id="DC" type="radio" name="typeCurrent" value="DC" onchange="changeTypeCurrent(this)" />
+            <label for="DC">Постояннный</label>                        
+        </div>
+
+        <div id="networkType">
+            <label id="label_3_1">3.1. Питающая сеть:</label>
+            <div id='network' class="radio_btn">
+                <input id="1F" type="radio" name="network" checked value="1F" />
+                <label for="1F">Однофазная</label>
+                <input id="3F" type="radio" name="network" value="3F" />
+                <label for="3F">Трехфазная</label>                
+            </div>
+        </div>
+
+        <div>
+            <label>4. Номинальное напряжение (В): </label>
+            <input id="voltage" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
+        </div>
+
+        <div>
+            <label>5. Допустимые потери напряжения (%): </label>
+            <input id="deltaVoltage" type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
+        </div>
+
+        <label>6. Расчет по:</label>
+        <div class="radio_btn">            
+            <input id="P" type="radio" name="typeCalc" checked value="P" onchange="changeTypeCalc(this)" />
+            <label for="P">Мощности</label>
+            <input id="I" type="radio" name="typeCalc" value="I" onchange="changeTypeCalc(this)" />
+            <label for="I">Току</label>                      
+        </div>
+
+        <div id="typeCalc">
+            <div id='type'>
+                <label>7. Мощность (Вт): </label>
+                <input id='power' type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
+                <div id="phi">
+                    <label>8. Коэффициент мощности <i>cos &phi;</i> (&lt;1): </label>
+                    <input id='cosPhi' type="number" onfocus="getFocus(this)" onblur="lostFocus(this)" autocomplete="off" />
+                </div>
+            </div>        
+        </div>       
+    </div>
+
+    <button id="btnCalc" onclick="calc()">Посчитать</button>
+}
