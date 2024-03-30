@@ -22,6 +22,14 @@ function calc() {
     }
     const pi = 3.1415926;
 
+    //проверка корректности и полноты данных
+    let alltData = (vertElCount == 1 && typeVerEl != "Выберите профиль электродов" && ground != "Выберите тип грунта" && zona != "Выберите климатическую зону" &&
+        !isNaN(vertElSechenie) && !isNaN(vertElCount) && !isNaN(vertElLenght) && !isNaN(horElH)) || (vertElCount != 1 && typeVerEl != "Выберите профиль электродов" &&
+            typeHorEl != "Выберите профиль сечения" && ground != "Выберите тип грунта" && zona != "Выберите климатическую зону" && !isNaN(vertElSechenie) &&
+                !isNaN(vertElCount) && !isNaN(vertElLenght) && !isNaN(vertElLenghtBeetwean) && !isNaN(horElSechenie) && !isNaN(horElLenght) && !isNaN(horElH));
+    let correctData = (vertElSechenie > 0 && vertElCount == 1 && vertElLenght > 0 && horElH > 0) || (vertElSechenie > 0 && vertElCount > 1 && vertElLenght > 0 &&
+            vertElLenghtBeetwean > 0 && horElSechenie > 0 && horElLenght > 0 && horElH > 0);
+
     //расчет сопротивления одного вертикального электрода:
 
     //приведем сечение верт электрода к диаметру
@@ -127,15 +135,12 @@ function calc() {
     //Общее сопротивления контура растеканию тока
     let R = (R_vert * R_hor) / (R_vert + R_hor);
     
-    if (vertElCount == 1 && (typeVerEl != "Выберите профиль электродов" && vertElSechenie != NaN && vertElCount != NaN && vertElLenght != NaN && horElH != NaN &&
-        ground != "Выберите тип грунта" && zona != "Выберите климатическую зону")) {
+    if (vertElCount == 1 && correctData && alltData) {
         $("#answear").remove();
         $("#partRight").append(`<div id='answear'></div>`);
         $('#answear').append(`<img src='/R0.png' class="calculationsPic" />`);
-        $("#answear").append(`<p><b>ответ: <i>${R_1el.toFixed(2)}</i></b></p>`);
-    } else if (vertElCount > 1 && (typeVerEl != "Выберите профиль электродов" && vertElSechenie != NaN && vertElCount != NaN && vertElLenght != NaN &&
-        vertElLenghtBeetwean != NaN && typeHorEl != "Выберите профиль сечения" && horElSechenie != NaN && horElLenght != NaN && horElH != NaN &&
-        ground != "Выберите тип грунта" && zona != "Выберите климатическую зону")) {
+        $("#answear").append(`<p><b>ответ: <i>${R_1el.toFixed(2)} Ом</i></b></p>`);
+    } else if (vertElCount > 1 && correctData && alltData) {
         $("#answear").remove();
         $("#partRight").append(`<div id='answear'></div>`);
         $("#answear").append(`<p><b>- сопротивление 1-го вертикального электрода:</b></p>`);
@@ -148,10 +153,14 @@ function calc() {
         }
         $("#answear").append(`<p><b>– общее сопротивление контура заземления растеканию тока:</b></p>`);
         $('#answear').append(`<img src='/R.png' class="calculationsPic"/>`);
-        $("#answear").append(`<p><b>ответ: <i>${R.toFixed(2)}</i></b></p>`);
+        $("#answear").append(`<p><b>ответ: <i>${R.toFixed(2)} Ом</i></b></p>`);
     } else {
         $("#answear").remove();
-        $("#partRight").append(`<div id='answear' style="color: red;"><p><b>Недостаточно данных для расчета!\nПожалуйста заполните все необходимые данные!</b></p></div>`);
+        if (!alltData) {
+            $("#partRight").append(`<div id='answear' style="color: red;"><p><b>Недостаточно данных для расчета!\nПожалуйста заполните все необходимые данные!</b></p></div>`);
+        }else if (!correctData) {
+            $("#partRight").append(`<div id='answear' style="color: red;"><p><b>Данные введены не корректно!</b></p></div>`);
+        }
     }
 }
 

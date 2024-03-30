@@ -45,7 +45,7 @@ function calc() {
         if (typeCurrent == "AC") {
             cosPhi = parseFloat((document.getElementById('cosPhi').value).replace(",", "."));
         }
-    }else if (typeCalc == "I") {
+    } else if (typeCalc == "I") {
         current = parseFloat((document.getElementById('current').value).replace(",", "."));
     }
     let unit;
@@ -61,7 +61,7 @@ function calc() {
 
     //прверка правильности введенных данных
     let correct = true;
-    if (material == "Выберите материал проводника" || cableLenght == NaN || voltage == NaN || deltaVoltage == NaN || method =="Выберите способ прокладки") {
+    if (material == "Выберите материал проводника" || cableLenght == NaN || voltage == NaN || deltaVoltage == NaN || method == "Выберите способ прокладки") {
         correct = false;
     }
     if (correct && typeCurrent == "DC") {
@@ -114,32 +114,38 @@ function calc() {
     } else if (material == "Алюминий" && typeCalc == "I") {
         S = clarifyCut(aluminiumCurrents, method, current, S);
     }
-        
-    //вывод расчетных данных
-    if (correct) {
-        if (cosPhi > 0 && cosPhi <= 1) {
-            $("#answear").remove();
-            $("#partRight").append(`<div id='answear'></div>`);
-            $("#answear").append(`<p>Минимальное требуемое значение проводника - <b>${S.toFixed(1)}</b></p>`);          
-            
-            if (material == "Медь") {
-                loadTable(cuprumCurrents, S);
-            } else if (material == "Алюминий") {
-                loadTable(aluminiumCurrents, S);
-            } else {
-                $("#answear").append(`<p><b><i><u>!!!Подумайте над тем стоит ли выбирать такой проводник!!!</u></i></b></p>`);
-            }
 
+    //вывод расчетных данных и проверка корректности введенных данных
+    if (cosPhi <= 0 || cosPhi > 1) {
+        $("#answear").remove();
+        $("#partRight").append(`<div id='answear'></div>`);
+        $("#answear").append(`<p style="color: red;"><b>Коэффициент мощности не может быть больше 1 или меньше 0!!!</b></p>`);
+    } else if (deltaVoltage < 0 || deltaVoltage > 100) {
+        $("#answear").remove();
+        $("#partRight").append(`<div id='answear'></div>`);
+        $("#answear").append(`<p style="color: red;"><b>Потери напряжения должны лежать в диапазоне 0-100%!!!</b></p>`);
+    } else if (voltage <= 0 || (power < 0 && typeCalc == "P") || (current < 0 && typeCalc == "I") || cableLenght <= 0) {
+        $("#answear").remove();
+        $("#partRight").append(`<div id='answear'></div>`);
+        $("#answear").append(`<p style="color: red;"><b>Ведены не корректные данные!!!</b></p>`);
+    } else if (correct) {
+        $("#answear").remove();
+        $("#partRight").append(`<div id='answear'></div>`);
+        $("#answear").append(`<p>Минимальное требуемое значение проводника - <b>${S.toFixed(1)} мм<sup>2</sup></b></p>`);
+
+        if (material == "Медь") {
+            loadTable(cuprumCurrents, S);
+        } else if (material == "Алюминий") {
+            loadTable(aluminiumCurrents, S);
         } else {
-            $("#answear").remove();
-            $("#partRight").append(`<div id='answear'></div>`);
-            $("#answear").append(`<p style="color: red;"><b>Коэффициент мощности не может быть больше 1 или меньше 0!!!</b></p>`);
+            $("#answear").append(`<p><b><i><u>!!!Подумайте над тем стоит ли выбирать такой проводник!!!</u></i></b></p>`);
         }
+
     } else {
         $("#answear").remove();
         $("#partRight").append(`<div id='answear'></div>`);
         $("#answear").append(`<p style="color: red;"><b>Не достаточно данных для расчета!!!</b></p>`);
-    }    
+    }
 }
 
 function loadTable(array, S) {//загрузка даблици Допустимых длительных токов 
